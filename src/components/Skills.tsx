@@ -35,7 +35,7 @@ const Skills = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-primary tracking-[0.2em] uppercase"
+                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-title tracking-[0.2em] uppercase"
                     >
                         {t.skills.title}
                     </motion.h2>
@@ -66,7 +66,7 @@ const Skills = () => {
                                 zIndex: 10,
                                 transition: { duration: 0.3 }
                             }}
-                            className="bg-theme-base/30 border border-theme-primary/10 p-8 rounded-2xl transition-colors duration-500 hover:bg-theme-base/50 hover:border-theme-accent/30 group-hover/skills:blur-[2px] group-hover/skills:scale-95 hover:!blur-0"
+                            className="bg-theme-base/30 dark:bg-theme-raised border border-theme-primary/10 dark:border-theme-primary/20 dark:shadow-[4px_4px_0_hsl(var(--theme-card-shadow))] p-8 rounded-2xl transition-colors duration-500 hover:bg-theme-base/50 dark:hover:bg-theme-raised hover:border-theme-accent/30 group-hover/skills:blur-[2px] group-hover/skills:scale-95 hover:!blur-0"
                         >
                             <h3 className="text-xl text-theme-accent font-bold mb-6 flex items-center">
                                 <span className="w-2 h-2 bg-theme-accent rounded-full mr-3 shadow-[0_0_10px_hsl(var(--theme-ember)/0.8)]"></span>

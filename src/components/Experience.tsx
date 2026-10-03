@@ -25,18 +25,19 @@ const TimelineCard = ({ exp, index }: { exp: ExperienceItem; index: number }) =>
         )}></div>
 
         {/* Spice Glow Card Wrapper */}
-        <div className="relative group/card transition-all duration-500 hover:scale-[1.02] hover:z-10">
+        {/* En sombre : carte relevée d'un ton et ombre nette, comme le cartouche du Hero */}
+        <div className="relative group/card rounded-xl dark:shadow-[4px_4px_0_hsl(var(--theme-card-shadow))] transition-all duration-500 hover:scale-[1.02] hover:z-10">
             {/* Gradient Border/Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-theme-accent via-theme-primary to-theme-base rounded-xl opacity-0 group-hover/card:opacity-100 transition-all duration-500 blur-[1px] group-hover/card:blur-sm group-hover/card:shadow-[0_0_30px_hsl(var(--theme-accent)/0.4)]" />
 
             {/* Inner Content */}
             <div className={cn(
-                "relative bg-theme-base/40 backdrop-blur-sm border rounded-xl p-[1px] overflow-hidden group-hover/card:bg-theme-base group-hover/card:border-transparent transition-colors duration-500",
+                "relative bg-theme-base/40 dark:bg-theme-raised backdrop-blur-sm border rounded-xl p-[1px] overflow-hidden group-hover/card:bg-theme-base dark:group-hover/card:bg-theme-raised group-hover/card:border-transparent transition-colors duration-500",
                 exp.highlight ? "border-theme-accent/50" : "border-theme-primary/20",
             )}>
                 <div className={cn(
-                    "relative group-hover/card:bg-theme-base rounded-xl p-6 transition-all duration-300",
-                    exp.highlight ? "bg-theme-accent/[0.08]" : "bg-theme-base/40",
+                    "relative group-hover/card:bg-theme-base dark:group-hover/card:bg-theme-raised rounded-xl p-6 transition-all duration-300",
+                    exp.highlight ? "bg-theme-accent/[0.08]" : "bg-theme-base/40 dark:bg-transparent",
                 )}>
                     {/* Liseré d'accent en tête de la carte mise en avant */}
                     {exp.highlight && (
@@ -100,7 +101,7 @@ const Experience = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-primary tracking-[0.2em] uppercase"
+                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-title tracking-[0.2em] uppercase"
                     >
                         {t.experience.title}
                     </motion.h2>
@@ -110,7 +111,7 @@ const Experience = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12">
                     {columns.map((column) => (
                         <div key={column.title}>
-                            <h3 className="font-heading text-sm md:text-base text-theme-accent tracking-[0.3em] uppercase mb-8 ml-4">
+                            <h3 className="font-heading text-lg md:text-xl lg:text-2xl text-theme-accent tracking-[0.3em] uppercase mb-10 ml-4">
                                 {column.title}
                             </h3>
                             <div className="relative border-l-2 border-theme-primary/20 ml-4 space-y-12">

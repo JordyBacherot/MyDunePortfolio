@@ -81,7 +81,10 @@ All Dune colors are declared as CSS custom properties in `src/index.css` and con
 | `--theme-accent` | `37 70% 49%` (amber) | `26 78% 36%` (burnt orange, 4.6:1) | Primary CTA, highlights |
 | `--theme-glow` | `38 50% 60%` | `38 66% 70%` | Hover glow states (never as text or under white text in light) |
 | `--theme-shadow` | `0 11% 2%` | `35 40% 80%` | Deepest shadows |
-| `--theme-ember` | `20 100% 50%` (vivid orange) | `26 78% 36%` (= accent) | Halos of timeline dots, badges, skill bullets |
+| `--theme-ember` | `23 63% 52%` (copper) | `26 78% 36%` (= accent) | Halos of timeline dots, badges, skill bullets |
+| `--theme-title` | `39 70% 69%` (gold of the hero name) | `18 60% 36%` (= primary) | Section titles, dark-mode primary CTA |
+| `--theme-raised` | `18 38% 11%` | `38 62% 89%` (= base) | Card surface, used through `dark:` only |
+| `--theme-card-shadow` | `23 63% 52% / 0.3` | transparent | Hard "paper-cut" card shadow `4px 4px 0`, dark only |
 
 The hero poster has its own `--poster-*` tokens, aligned with `motion/src/palettes.js`.
 

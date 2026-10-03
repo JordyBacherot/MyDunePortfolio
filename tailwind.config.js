@@ -54,6 +54,8 @@ export default {
 					accent: "hsl(var(--theme-accent))",
 					glow: "hsl(var(--theme-glow))",
 					shadow: "hsl(var(--theme-shadow))",
+					title: "hsl(var(--theme-title))",
+					raised: "hsl(var(--theme-raised))",
 				},
 				// Affiche animée du Hero (valeurs claires et sombres dans index.css)
 				poster: {

@@ -128,9 +128,9 @@ export const translations: Record<Language, TranslationStructure> = {
                     period: "2026 - Présent",
                     description: [
                         "Écosystème technique et conceptuel autour des LLM",
-                        "Cours « Développer avec l'IA »",
                         "Appeler un LLM, créer un chatbot, automatiser des processus",
-                        "Dimensionner des modèles pour les entreprises",
+                        "Dimensionner des LLM pour les entreprises",
+                        "TD « Développement Logiciel avec l'IA »",
                     ],
                     type: "Enseignement",
                     section: "work",
@@ -153,7 +153,7 @@ export const translations: Record<Language, TranslationStructure> = {
                     organization: "IDMC",
                     period: "2024 - 2026",
                     description: "Parcours IACH : Intelligence Artificielle Centrée Humain.",
-                    descriptionPlus: "Major de promotion · M1 & M2",
+                    descriptionPlus: "Major de promotion",
                     type: "Académique",
                     section: "education"
                 },

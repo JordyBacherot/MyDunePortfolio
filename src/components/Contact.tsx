@@ -113,7 +113,7 @@ const Contact = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-primary tracking-[0.2em] uppercase"
+                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-title tracking-[0.2em] uppercase"
                     >
                         {t.contact.title}
                     </motion.h2>
@@ -140,7 +140,7 @@ const Contact = () => {
                         {/* Social links card */}
                         <motion.div
                             whileHover={{ scale: 1.03, y: -5 }}
-                            className="bg-gradient-to-br from-theme-primary/10 to-theme-accent/5 p-6 rounded-2xl border border-theme-primary/20 backdrop-blur-sm hover:border-theme-accent/40 transition-all duration-500"
+                            className="bg-gradient-to-br from-theme-primary/10 to-theme-accent/5 dark:bg-theme-raised dark:shadow-[4px_4px_0_hsl(var(--theme-card-shadow))] p-6 rounded-2xl border border-theme-primary/20 backdrop-blur-sm hover:border-theme-accent/40 transition-all duration-500"
                         >
                             <h3 className="font-bold text-theme-primary mb-4 tracking-wider">{t.contact.networks}</h3>
                             <div className="flex gap-3">
@@ -170,7 +170,7 @@ const Contact = () => {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="bg-gradient-to-br from-theme-accent/10 to-transparent p-6 rounded-2xl border border-theme-accent/20 italic"
+                            className="bg-gradient-to-br from-theme-accent/10 to-transparent dark:bg-theme-raised dark:shadow-[4px_4px_0_hsl(var(--theme-card-shadow))] p-6 rounded-2xl border border-theme-accent/20 italic"
                         >
                             <p className="text-theme-primary dark:text-theme-glow text-sm leading-relaxed">
                                 "{t.contact.quote}"

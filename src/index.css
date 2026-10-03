@@ -60,8 +60,12 @@
     --theme-accent: 26 78% 36%;
     --theme-glow: 38 66% 70%;
     --theme-shadow: 35 40% 80%;
-    /* Halo des pastilles et badges (orange vif en sombre, accent en clair) */
+    /* Halo des pastilles et badges (cuivre en sombre, accent en clair) */
     --theme-ember: 26 78% 36%;
+    /* Titres de section, surface des cartes et ombre nette « papier découpé » (le relief n'existe qu'en sombre) */
+    --theme-title: 18 60% 36%;
+    --theme-raised: 38 62% 89%;
+    --theme-card-shadow: 0 0% 0% / 0;
 
     /* Affiche animée du Hero (Dune clair) */
     --poster-ink: 18 55% 16%;
@@ -103,7 +107,11 @@
     --theme-accent: 37 70% 49%;
     --theme-glow: 38 50% 60%;
     --theme-shadow: 0 11% 2%;
-    --theme-ember: 20 100% 50%;
+    --theme-ember: 23 63% 52%;
+    /* Or du nom du Hero, carte relevée d'un ton et ombre cuivrée comme le cartouche */
+    --theme-title: 39 70% 69%;
+    --theme-raised: 18 38% 11%;
+    --theme-card-shadow: 23 63% 52% / 0.3;
 
     /* Affiche animée du Hero (Dune sombre) : relief du nom en cuivre, visible sur le ciel de nuit */
     --poster-ink: 39 70% 69%;
@@ -127,6 +135,9 @@
     --theme-glow: 54 99% 77%; /* Bright Pale Yellow */
     --theme-shadow: 0 0% 0%; /* Pitch black */
     --theme-ember: 20 100% 50%;
+    --theme-title: 50 98% 64%;
+    --theme-raised: 0 0% 3%;
+    --theme-card-shadow: 0 0% 0% / 0;
   }
 
   .universe-cyberpunk.dark {

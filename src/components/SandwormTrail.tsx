@@ -47,9 +47,23 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
         const wormSize = isMobile ? 45 : WORM_SIZE; // Smaller on mobile
         const segmentCount = isMobile ? 40 : SEGMENT_COUNT; // Drastically reduced on mobile
 
+        // Vitesses en px par image (60 i/s sur ordinateur, 30 sur mobile) : arrivée rapide, puis départ qui accélère
+        const APPROACH_SPEED = isMobile ? 8 : 6;
+        const LEAVE_SPEED_START = 2;
+        const LEAVE_SPEED_MAX = isMobile ? 8 : 9;
+        const LEAVE_ACCEL = 0.12;
+        // Un anneau du corps tous les SPACING px parcourus : la longueur du ver ne dépend pas de sa vitesse
+        const SPACING = isMobile ? 3.2 : 3.5;
+        // Départ juste hors champ (auparavant 1000 px à gauche, soit ~5 s d'attente)
+        const START_X = -wormSize * 2;
+
         // Initial positions based on variant
-        let wormX = isMobile ? canvas.width / 2 : -1000;
+        let wormX = isMobile ? canvas.width / 2 : START_X;
         let wormY = isMobile ? -200 : canvas.height / 2;
+        let prevX = wormX;
+        let prevY = wormY;
+        let trail = 0;
+        let leaveSpeed = LEAVE_SPEED_START;
 
         let thumperActive = true;
         let thumperScale = 1;
@@ -72,7 +86,7 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
             if (isMobile) {
                 segments.push({ x: canvas.width / 2, y: -500 - i * 10, size: wormSize });
             } else {
-                segments.push({ x: -1000 - i * 15, y: canvas.height / 2, size: wormSize });
+                segments.push({ x: START_X - i * SPACING, y: canvas.height / 2, size: wormSize });
             }
         }
 
@@ -155,7 +169,7 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
 
                 switch (currentState) {
                     case 'APPROACH':
-                        speed = isMobile ? 3.2 : 3.5;
+                        speed = APPROACH_SPEED;
                         wormOpacity = 0.1;
                         mouthOpen = 0;
                         headLift = 0;
@@ -196,24 +210,31 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
 
                         if (stateTimer > 2) {
                             currentState = 'LEAVE';
+                            leaveSpeed = LEAVE_SPEED_START;
                         }
                         break;
 
-                    case 'LEAVE':
-                        speed = isMobile ? 1.8 : 1.5;
+                    case 'LEAVE': {
+                        // Repart doucement puis accélère : la boucle reprend dès que la queue a quitté l'écran
+                        leaveSpeed = Math.min(LEAVE_SPEED_MAX, leaveSpeed + LEAVE_ACCEL);
+                        speed = leaveSpeed;
                         wormOpacity = Math.max(0.1, wormOpacity - 0.005);
                         mouthOpen = Math.max(0, mouthOpen - 0.02);
                         headLift = Math.max(0, headLift - 0.5);
 
-                        const isGone = isMobile ? (wormY > canvas.height + 200) : (wormX > canvas.width + 1000);
+                        const tail = segments[segments.length - 1];
+                        const isGone = isMobile ? (tail.y > canvas.height + wormSize) : (tail.x > canvas.width + wormSize * 2);
 
                         if (isGone) {
                             if (isMobile) {
                                 wormY = -200;
                                 wormX = canvas.width / 2;
                             } else {
-                                wormX = -1000;
+                                wormX = START_X;
                             }
+                            prevX = wormX;
+                            prevY = wormY;
+                            trail = 0;
 
                             currentState = 'APPROACH';
                             thumperActive = true;
@@ -224,11 +245,12 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
                                 if (isMobile) {
                                     segments[i] = { x: canvas.width / 2, y: -200 - i * 10, size: wormSize };
                                 } else {
-                                    segments[i] = { x: -1000 - i * 15, y: canvas.height / 2, size: wormSize };
+                                    segments[i] = { x: START_X - i * SPACING, y: canvas.height / 2, size: wormSize };
                                 }
                             }
                         }
                         break;
+                    }
                 }
 
                 // --- UPDATE POSITION ---
@@ -244,11 +266,19 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
                     wormY = canvas.height / 2 + waveY - headLift;
                 }
 
-                // Update Segments
+                // Update Segments : anneaux intercalés tous les SPACING px, du plus ancien au plus récent
                 if (speed > 0) {
-                    segments.unshift({ x: wormX, y: wormY, size: wormSize });
-                    if (segments.length > segmentCount) segments.pop();
+                    trail += Math.hypot(wormX - prevX, wormY - prevY);
+                    const added = Math.floor(trail / SPACING);
+                    for (let k = 1; k <= added; k++) {
+                        const f = k / added;
+                        segments.unshift({ x: prevX + (wormX - prevX) * f, y: prevY + (wormY - prevY) * f, size: wormSize });
+                    }
+                    trail -= added * SPACING;
+                    if (segments.length > segmentCount) segments.length = segmentCount;
                 }
+                prevX = wormX;
+                prevY = wormY;
 
 
                 // --- 1. DRAW SAND WAVES ---

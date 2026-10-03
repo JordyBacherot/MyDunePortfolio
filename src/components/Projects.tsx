@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
-import SideDecoration from "./SideDecoration";
+import SpiceEffect from "./SpiceEffect";
 
 // Bouton plein du verso (lien du projet, ou un par site quand la carte en regroupe plusieurs)
 const LINK_BUTTON = "px-5 py-2 bg-theme-primary text-theme-base font-bold rounded-full hover:bg-theme-accent dark:hover:bg-theme-glow hover:scale-105 transition-all duration-300 text-sm";
@@ -12,10 +12,9 @@ const Projects = () => {
 
     return (
         <section id="projets" className="py-24 w-full relative overflow-hidden">
-            {/* Side Decorations - Desktop Only */}
-            <div className="hidden lg:block">
-                <SideDecoration side="left" variant="dune1" mode="sandworm" className="absolute left-0 top-10" />
-                <SideDecoration side="right" variant="dune2" mode="sandworm" className="absolute right-0 top-40" />
+            {/* Épice en suspension derrière les cartes, fondue en haut et en bas de la section */}
+            <div className="absolute inset-0 z-0 pointer-events-none [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
+                <SpiceEffect />
             </div>
 
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
@@ -24,7 +23,7 @@ const Projects = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-primary tracking-[0.2em] uppercase"
+                        className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-theme-title tracking-[0.2em] uppercase"
                     >
                         {t.projects.title}
                     </motion.h2>
@@ -44,7 +43,7 @@ const Projects = () => {
                         >
                             <div className="relative w-full h-full cursor-pointer transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                                 {/* Front Face */}
-                                <div className="absolute inset-0 [backface-visibility:hidden] bg-theme-base/40 backdrop-blur-md border border-theme-primary/20 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-lg shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_30px_hsl(var(--theme-ember)/0.15),inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                                <div className="absolute inset-0 [backface-visibility:hidden] bg-theme-base/40 dark:bg-theme-raised backdrop-blur-md border border-theme-primary/20 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-lg shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] dark:shadow-[4px_4px_0_hsl(var(--theme-card-shadow))] group-hover:shadow-[0_0_30px_hsl(var(--theme-ember)/0.15),inset_0_1px_1px_rgba(255,255,255,0.05)]">
                                     <div className="h-2 w-full absolute top-0 left-0 bg-gradient-to-r from-theme-primary to-theme-accent opacity-50 rounded-t-xl" />
 
                                     <h3 className="text-lg md:text-xl font-bold text-theme-surface mb-2 group-hover:text-theme-accent transition-colors duration-300 line-clamp-3">
@@ -67,7 +66,7 @@ const Projects = () => {
                                 </div>
 
                                 {/* Back Face */}
-                                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-theme-base/90 backdrop-blur-xl border border-theme-accent/50 rounded-xl p-6 flex flex-col justify-between items-center text-center shadow-[0_0_30px_hsl(var(--theme-ember)/0.2),inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-theme-base/90 dark:bg-theme-raised backdrop-blur-xl border border-theme-accent/50 rounded-xl p-6 flex flex-col justify-between items-center text-center shadow-[0_0_30px_hsl(var(--theme-ember)/0.2),inset_0_1px_1px_rgba(255,255,255,0.05)]">
                                     <h3 className="text-xl font-bold text-theme-accent mb-2 shrink-0">
                                         {t.projects.details}
                                     </h3>

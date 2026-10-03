@@ -1,11 +1,10 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import SandstormEffect from './SandstormEffect';
 
 type SideDecorationProps = {
     side: 'left' | 'right';
     variant: 'dune1' | 'dune2' | 'mountain';
-    mode?: 'dune' | 'geometry' | 'matrix' | 'storm' | 'sandworm';
+    mode?: 'dune' | 'geometry' | 'matrix' | 'storm';
     showParticles?: boolean;
     className?: string;
 };
@@ -240,12 +239,6 @@ const SideDecoration = ({ side, variant, mode = 'dune', showParticles = true, cl
                 </div>
             )}
 
-            {/* --- SANDWORM MODE (Projects) --- */}
-            {mode === 'sandworm' && (
-                <div className="absolute inset-0 opacity-60 mix-blend-screen">
-                    <SandstormEffect />
-                </div>
-            )}
         </div>
     );
 };

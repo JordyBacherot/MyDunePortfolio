@@ -24,8 +24,8 @@ const HeroActions = ({ className, compact = false }: HeroActionsProps) => {
     const size = compact ? COMPACT_SIZE : SIZE;
     return (
         <div className={cn("flex flex-col md:flex-row", compact ? "gap-3 md:gap-6" : "gap-6", className)}>
-            {/* En clair, fond presque plein : texte blanc lisible (4,7:1) ; le survol fonce vers le cuivre */}
-            <Button asChild className={cn("bg-theme-accent/90 dark:bg-theme-accent/70 backdrop-blur-sm text-white hover:bg-theme-primary dark:hover:bg-theme-glow/90 hover:animate-spice-glow transition-all duration-300 rounded-full uppercase font-bold", size)}>
+            {/* Clair : accent presque plein, texte blanc (4,7:1), survol cuivre. Sombre : or du nom, texte nuit (11:1) */}
+            <Button asChild className={cn("bg-theme-accent/90 dark:bg-theme-title backdrop-blur-sm text-white dark:text-theme-base hover:bg-theme-primary dark:hover:bg-theme-glow hover:animate-spice-glow transition-all duration-300 rounded-full uppercase font-bold", size)}>
                 <a href="#projets" onClick={scrollTo("projets")}>{t.hero.viewProjects}</a>
             </Button>
             <Button asChild variant="outline" className={cn("bg-theme-base/40 backdrop-blur-sm border-theme-primary text-theme-primary hover:bg-theme-primary/10 hover:text-theme-surface hover:border-theme-accent transition-all duration-300 rounded-full uppercase font-bold", size)}>
