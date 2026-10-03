@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState, type RefObject } from "react";
 import { heroPlaybackReducer, initialPlaybackState, type PlaybackState } from "./heroPlayback";
-import { MOUNT_DELAY_MS, SKIP_SCROLL_PX, START_TIMEOUT_MS } from "./heroTimeline";
+import { MOUNT_DELAY_MS, REVEAL_SCROLL_PX, START_TIMEOUT_MS } from "./heroTimeline";
 
 // Animations réduites, ou `?still` en développement pour vérifier le mode statique
 const startsStill = (): boolean =>
@@ -54,25 +54,29 @@ export function useHeroPlayback(heroRef: RefObject<HTMLElement | null>, variantK
         };
     }, []);
 
-    // Saut de l'intro : défilement, clic dans le Hero (hors liens et boutons), touche clavier
+    // Défilement ou clic dans le Hero (hors liens et boutons) : le texte apparaît d'un coup, l'animation continue.
+    // Échap saute l'intro jusqu'à la boucle.
     const skippable = state.phase === "start" || state.phase === "loading" || state.phase === "intro";
     useEffect(() => {
         if (!skippable) return;
-        const skip = () => dispatch({ type: "SKIP" });
+        const reveal = () => dispatch({ type: "REVEAL" });
         const onScroll = () => {
-            if (window.scrollY > SKIP_SCROLL_PX) skip();
+            if (window.scrollY > REVEAL_SCROLL_PX) reveal();
         };
         const onPointerDown = (event: PointerEvent) => {
             const target = event.target;
-            if (target instanceof Element && heroRef.current?.contains(target) && !target.closest("a, button")) skip();
+            if (target instanceof Element && heroRef.current?.contains(target) && !target.closest("a, button")) reveal();
+        };
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") dispatch({ type: "SKIP" });
         };
         window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("keydown", skip);
         window.addEventListener("pointerdown", onPointerDown);
+        window.addEventListener("keydown", onKeyDown);
         return () => {
             window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("keydown", skip);
             window.removeEventListener("pointerdown", onPointerDown);
+            window.removeEventListener("keydown", onKeyDown);
         };
     }, [skippable, heroRef]);
 

@@ -148,6 +148,10 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
         segCtx.lineWidth = 2; // Scaled up
         segCtx.stroke();
 
+        // Calque du corps (voir le dessin du corps dans animate)
+        const bodyCanvas = document.createElement('canvas');
+        const bodyCtx = bodyCanvas.getContext('2d')!;
+
         let lastFrameTime = 0;
         const targetFPS = isMobile ? 30 : 60;
         const frameInterval = 1000 / targetFPS;
@@ -332,21 +336,20 @@ const SandwormTrail = ({ variant = 'desktop-horizontal' }: SandwormTrailProps) =
 
 
                 // --- 2. DRAW WORM BODY ---
-                // Use pre-rendered sprite
+                // Corps opaque sur un calque à part, puis posé avec une seule transparence : des anneaux
+                // semi-transparents superposés formaient une traînée floue quand le ver entre ou sort par un bord
+                if (bodyCanvas.width !== canvas.width || bodyCanvas.height !== canvas.height) {
+                    bodyCanvas.width = canvas.width;
+                    bodyCanvas.height = canvas.height;
+                }
+                bodyCtx.clearRect(0, 0, bodyCanvas.width, bodyCanvas.height);
                 for (let i = segments.length - 1; i >= 0; i--) {
                     const s = segments[i];
-                    const indexRatio = i / segmentCount;
-                    const size = s.size * (1 - indexRatio * 0.3);
-
-                    const segOpacity = wormOpacity * (1 - indexRatio * 0.2);
-                    if (segOpacity < 0.05) continue;
-
-                    ctx.globalAlpha = segOpacity;
-
-                    // Draw image centered
-                    const drawSize = size * 2;
-                    ctx.drawImage(segmentCanvas, s.x - size, s.y - size, drawSize, drawSize);
+                    const size = s.size * (1 - (i / segmentCount) * 0.3);
+                    bodyCtx.drawImage(segmentCanvas, s.x - size, s.y - size, size * 2, size * 2);
                 }
+                ctx.globalAlpha = wormOpacity;
+                ctx.drawImage(bodyCanvas, 0, 0);
                 ctx.globalAlpha = 1.0;
 
                 // Draw Head (Circular Mouth)

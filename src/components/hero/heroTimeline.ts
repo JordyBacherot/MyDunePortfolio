@@ -18,7 +18,7 @@ export const CUE_TIMES: Readonly<Record<Cue, number>> = {
 export const MOUNT_DELAY_MS = 100;
 /** Si l'intro n'a pas démarré après ce délai, on passe en mode statique */
 export const START_TIMEOUT_MS = 2500;
-/** Défilement (px) au-delà duquel l'intro est sautée */
-export const SKIP_SCROLL_PX = 40;
+/** Défilement (px) au-delà duquel tout le texte du Hero apparaît, sans couper l'animation */
+export const REVEAL_SCROLL_PX = 40;
 /** Durée des fondus entre couches vidéo (s) */
 export const CROSSFADE_S = 0.3;

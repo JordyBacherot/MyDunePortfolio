@@ -32,6 +32,15 @@ describe("heroPlaybackReducer", () => {
         expect(state.cues).toEqual({ name: true, frame: true, description: true, actions: false });
     });
 
+    it("affiche tout le texte au défilement ou au clic sans interrompre l'intro", () => {
+        const state = reduce(intro(), { type: "REVEAL" });
+        expect(state.phase).toBe("intro");
+        expect(state.cues).toEqual(allCues);
+        expect(reduce(loading(), { type: "REVEAL" })).toEqual({ phase: "loading", cues: allCues, paused: false });
+        expect(reduce(state, { type: "REVEAL" })).toBe(state);
+        expect(reduce(state, { type: "INTRO_TIME", time: CUE_TIMES.name })).toBe(state);
+    });
+
     it("ne retire jamais un repère déjà déclenché", () => {
         const state = reduce(reduce(intro(), { type: "INTRO_TIME", time: CUE_TIMES.frame + 0.2 }), { type: "INTRO_TIME", time: 1 });
         expect(state.cues.frame).toBe(true);

@@ -14,6 +14,7 @@ export type PlaybackEvent =
     | { type: "INTRO_TIME"; time: number }
     | { type: "INTRO_ENDED" }
     | { type: "SKIP" }
+    | { type: "REVEAL" }
     | { type: "VARIANT_CHANGED" }
     | { type: "MEDIA_ERROR" }
     | { type: "START_TIMEOUT" }
@@ -54,6 +55,11 @@ export function heroPlaybackReducer(state: PlaybackState, event: PlaybackEvent):
             return state.phase === "intro" ? toLoop(state) : state;
         case "SKIP":
             return state.phase === "start" || state.phase === "loading" || state.phase === "intro" ? toLoop(state) : state;
+        case "REVEAL": {
+            // Tout le texte d'un coup (défilement, clic) ; la vidéo poursuit son intro
+            const playing = state.phase === "start" || state.phase === "loading" || state.phase === "intro";
+            return playing && Object.values(state.cues).some((shown) => !shown) ? { ...state, cues: ALL_CUES } : state;
+        }
         case "VARIANT_CHANGED":
             return state.phase === "intro" ? toLoop(state) : state;
         case "MEDIA_ERROR":

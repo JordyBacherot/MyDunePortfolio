@@ -10,6 +10,10 @@ interface PosterCartoucheProps {
     instant: boolean;
 }
 
+// Mêmes unités aux deux bouts pour que Framer Motion interpole le masque
+const CLOSED = "inset(0% 50% 0% 50%)";
+const OPEN = "inset(-2% -2% -10% -2%)";
+
 // Les mots montent en fondu, en cascade, une fois le cartouche presque déroulé
 const RisingWords = ({ text }: { text: string }) => (
     <>
@@ -36,11 +40,13 @@ const PosterCartouche = ({ description, showDescription, showActions, instant }:
     return (
         <motion.div
             className={cn(
-                "w-full max-w-3xl origin-center border border-poster-frame bg-poster-paper/85 px-5 py-4 shadow-[4px_4px_0_hsl(var(--poster-ink-shadow)/0.5)] md:px-10 md:py-6",
+                "w-full max-w-3xl border border-poster-frame bg-poster-paper/85 px-5 py-4 shadow-[4px_4px_0_hsl(var(--poster-ink-shadow)/0.5)] md:px-10 md:py-6",
                 !descriptionVisible && "invisible",
             )}
-            initial={instant ? false : { scaleX: 0 }}
-            animate={{ scaleX: descriptionVisible ? 1 : 0 }}
+            // Dévoilé depuis le centre par un masque, sans mise à l'échelle : un scaleX étirait le texte pixelisé
+            // pendant l'ouverture. Le masque final déborde pour laisser passer l'ombre portée.
+            initial={instant ? false : { clipPath: CLOSED }}
+            animate={{ clipPath: descriptionVisible ? OPEN : CLOSED }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
             <h2 className="mb-4 text-balance text-center text-sm font-medium leading-relaxed text-poster-ink md:mb-5 md:text-xl">
