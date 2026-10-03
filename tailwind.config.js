@@ -54,7 +54,14 @@ export default {
 					accent: "hsl(var(--theme-accent))",
 					glow: "hsl(var(--theme-glow))",
 					shadow: "hsl(var(--theme-shadow))",
-				}
+				},
+				// Affiche animée du Hero (valeurs claires et sombres dans index.css)
+				poster: {
+					ink: "hsl(var(--poster-ink))",
+					"ink-shadow": "hsl(var(--poster-ink-shadow))",
+					frame: "hsl(var(--poster-frame))",
+					paper: "hsl(var(--poster-paper))",
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -63,8 +70,8 @@ export default {
 			},
 			keyframes: {
 				'spice-glow': {
-					'0%, 100%': { boxShadow: '0 0 15px rgba(210, 144, 38, 0.4)' },
-					'50%': { boxShadow: '0 0 35px rgba(210, 144, 38, 0.8), 0 0 10px rgba(255, 255, 255, 0.2) inset' },
+					'0%, 100%': { boxShadow: '0 0 15px hsl(var(--theme-accent) / 0.4)' },
+					'50%': { boxShadow: '0 0 35px hsl(var(--theme-accent) / 0.8), 0 0 10px rgba(255, 255, 255, 0.2) inset' },
 				}
 			},
 			animation: {

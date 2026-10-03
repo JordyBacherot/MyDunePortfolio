@@ -5,6 +5,7 @@ import UniverseToggle from './UniverseToggle';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUniverse } from '../contexts/UniverseContext';
+import { fastScrollTo } from '../lib/fastScroll';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -53,11 +54,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
 
             <header className="fixed top-0 left-0 right-0 z-40 bg-theme-base/80 backdrop-blur-md border-b border-theme-primary/10 transition-colors duration-500">
-                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                {/* Sur téléphone, titre et marges réduits : sinon le bouton de thème sort de l'écran */}
+                <div className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="text-lg md:text-xl font-bold tracking-[0.3em] text-theme-primary uppercase font-heading"
+                        className="text-xs tracking-[0.2em] min-[380px]:text-sm sm:text-lg sm:tracking-[0.3em] md:text-xl font-bold text-theme-primary uppercase font-heading"
                     >
                         Portfolio
                     </motion.div>
@@ -71,7 +73,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         href={`#${targetId}`}
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                                            fastScrollTo(targetId);
                                         }}
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
@@ -84,7 +86,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 );
                             })}
                         </nav>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
                             <UniverseToggle />
                             <LanguageToggle />
                             {universe !== 'cyberpunk' && (

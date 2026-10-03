@@ -69,7 +69,7 @@ const Skills = () => {
                             className="bg-theme-base/30 border border-theme-primary/10 p-8 rounded-2xl transition-colors duration-500 hover:bg-theme-base/50 hover:border-theme-accent/30 group-hover/skills:blur-[2px] group-hover/skills:scale-95 hover:!blur-0"
                         >
                             <h3 className="text-xl text-theme-accent font-bold mb-6 flex items-center">
-                                <span className="w-2 h-2 bg-theme-accent rounded-full mr-3 shadow-[0_0_10px_rgba(255,85,0,0.8)]"></span>
+                                <span className="w-2 h-2 bg-theme-accent rounded-full mr-3 shadow-[0_0_10px_hsl(var(--theme-ember)/0.8)]"></span>
                                 {category.name}
                             </h3>
                             <div className="flex flex-wrap gap-3">

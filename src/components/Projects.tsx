@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import SideDecoration from "./SideDecoration";
 
+// Bouton plein du verso (lien du projet, ou un par site quand la carte en regroupe plusieurs)
+const LINK_BUTTON = "px-5 py-2 bg-theme-primary text-theme-base font-bold rounded-full hover:bg-theme-accent dark:hover:bg-theme-glow hover:scale-105 transition-all duration-300 text-sm";
+
 const Projects = () => {
     const { t } = useLanguage();
     const projects = t.projects.items;
@@ -41,7 +44,7 @@ const Projects = () => {
                         >
                             <div className="relative w-full h-full cursor-pointer transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                                 {/* Front Face */}
-                                <div className="absolute inset-0 [backface-visibility:hidden] bg-theme-base/40 backdrop-blur-md border border-theme-primary/20 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-lg shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_30px_rgba(255,85,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                                <div className="absolute inset-0 [backface-visibility:hidden] bg-theme-base/40 backdrop-blur-md border border-theme-primary/20 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-lg shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_30px_hsl(var(--theme-ember)/0.15),inset_0_1px_1px_rgba(255,255,255,0.05)]">
                                     <div className="h-2 w-full absolute top-0 left-0 bg-gradient-to-r from-theme-primary to-theme-accent opacity-50 rounded-t-xl" />
 
                                     <h3 className="text-lg md:text-xl font-bold text-theme-surface mb-2 group-hover:text-theme-accent transition-colors duration-300 line-clamp-3">
@@ -64,7 +67,7 @@ const Projects = () => {
                                 </div>
 
                                 {/* Back Face */}
-                                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-theme-base/90 backdrop-blur-xl border border-theme-accent/50 rounded-xl p-6 flex flex-col justify-between items-center text-center shadow-[0_0_30px_rgba(255,85,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-theme-base/90 backdrop-blur-xl border border-theme-accent/50 rounded-xl p-6 flex flex-col justify-between items-center text-center shadow-[0_0_30px_hsl(var(--theme-ember)/0.2),inset_0_1px_1px_rgba(255,255,255,0.05)]">
                                     <h3 className="text-xl font-bold text-theme-accent mb-2 shrink-0">
                                         {t.projects.details}
                                     </h3>
@@ -81,12 +84,24 @@ const Projects = () => {
                                                 href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="px-5 py-2 bg-theme-primary text-theme-base font-bold rounded-full hover:bg-theme-glow hover:scale-105 transition-all duration-300 text-sm"
+                                                className={LINK_BUTTON}
                                                 onClick={(e) => e.stopPropagation()}
                                             >
                                                 {project.link.includes('github.com') ? 'GitHub' : t.projects.seeProject}
                                             </a>
                                         )}
+                                        {project.sites?.map((site) => (
+                                            <a
+                                                key={site.url}
+                                                href={site.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={LINK_BUTTON}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {site.name}
+                                            </a>
+                                        ))}
                                         {project.githubLink && (
                                             <a
                                                 href={project.githubLink}

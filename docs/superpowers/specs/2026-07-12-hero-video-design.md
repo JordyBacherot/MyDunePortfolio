@@ -1,7 +1,7 @@
 # Hero cinématique « Arrivée sur Arrakis » — Design
 
 **Date :** 2026-07-12
-**Statut :** validé en brainstorming, en attente de relecture finale
+**Statut :** remplacé le 2026-10-01 par `2026-10-01-hero-affiche-animee-design.md` (motion design 2D)
 **Portée :** univers Dune uniquement, section Hero uniquement
 
 ## 1. Objectif

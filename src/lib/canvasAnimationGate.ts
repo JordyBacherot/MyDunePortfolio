@@ -1,11 +1,11 @@
 /**
- * Suspend une boucle d'animation canvas quand l'élément est hors écran
+ * Suspend une animation (boucle canvas, vidéo…) quand l'élément est hors écran
  * ou que l'onglet est caché, et la relance quand il redevient visible.
- * `start` doit être idempotent (ne rien faire si la boucle tourne déjà).
+ * `start` doit être idempotent (ne rien faire si l'animation tourne déjà).
  * Retourne une fonction de nettoyage à appeler au démontage.
  */
 export function gateCanvasAnimation(
-    canvas: HTMLCanvasElement,
+    element: Element,
     start: () => void,
     stop: () => void
 ): () => void {
@@ -23,7 +23,7 @@ export function gateCanvasAnimation(
         onScreen = entry.isIntersecting;
         update();
     });
-    observer.observe(canvas);
+    observer.observe(element);
     document.addEventListener('visibilitychange', update);
 
     return () => {

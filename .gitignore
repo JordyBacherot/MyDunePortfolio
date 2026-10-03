@@ -30,3 +30,13 @@ _bmad_output
 design-system/
 cyber_design_system.md
 dune_ui_ux_recommendations.md
+# Création du motion design du Hero, local uniquement (le site n'embarque que les vidéos rendues de src/assets/hero)
+# Essais Blender (rendus lourds)
+blender/
+# Projet HyperFrames : sources de la scène, scripts de rendu et d'encodage, rendus, notes de critique
+motion/
+# Skills (HyperFrames, GSAP, motion design) et réglages locaux de Claude Code
+.claude/
+skills-lock.json
+# Spec et plan de conception de l'affiche animée
+docs/superpowers/**/2026-10-01-hero-affiche-animee*

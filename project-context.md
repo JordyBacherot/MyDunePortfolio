@@ -38,7 +38,8 @@ src/
 │   └── LanguageContext.tsx  # i18n provider (FR/EN), React Context
 ├── components/
 │   ├── Layout.tsx           # Header (nav, theme/lang toggles), <main>, footer
-│   ├── Hero.tsx             # Landing section (name + title + CTA buttons)
+│   ├── Hero.tsx             # Hero switch by universe (Dune → hero/HeroPoster, Cyberpunk → hero/HeroCyberpunk)
+│   ├── hero/                # Animated poster hero: pre-rendered HyperFrames video + synced HTML text (spec 2026-10-01-hero-affiche-animee)
 │   ├── Experience.tsx       # Professional journey timeline
 │   ├── Skills.tsx           # Tech skills grid
 │   ├── Projects.tsx         # Project cards
@@ -70,16 +71,19 @@ src/
 
 ### 4.1 Color Palette (HSL CSS variables)
 
-All Dune colors are declared as CSS custom properties in `src/index.css` and consumed via Tailwind classes `text-dune-*`, `bg-dune-*`, `border-dune-*`.
+All Dune colors are declared as CSS custom properties in `src/index.css` and consumed via Tailwind classes `text-theme-*`, `bg-theme-*`, `border-theme-*` (arbitrary shadows use `hsl(var(--theme-*)/alpha)`, never hardcoded rgba). Light mode is palette A "parchemin" (2026-10), every text color AA on the background.
 
 | Token | Dark mode | Light mode | Usage |
 |-------|----------|------------|-------|
-| `--dune-base` | `0 20% 5%` (near-black) | `30 40% 82%` (warm sand) | Page background |
-| `--dune-sand` | `30 30% 87%` (pale sand) | `20 20% 10%` (dark brown) | Body text |
-| `--dune-copper` | `23 63% 52%` | same | Headings, accents, nav |
-| `--dune-orange` | `37 70% 49%` | same | Primary CTA, highlights |
-| `--dune-glow` | `38 50% 60%` | same | Hover glow states |
-| `--dune-shadow` | `0 11% 2%` | `30 15% 85%` | Deepest shadows |
+| `--theme-base` | `15 44% 7%` (hero night sky, = `--poster-paper`) | `38 62% 89%` (parchment) | Page and body background |
+| `--theme-surface` | `30 30% 87%` (pale sand) | `18 55% 16%` (ink brown, 12:1) | Body text |
+| `--theme-primary` | `23 63% 52%` (copper) | `18 60% 36%` (deep copper, 5.5:1) | Headings, accents, nav |
+| `--theme-accent` | `37 70% 49%` (amber) | `26 78% 36%` (burnt orange, 4.6:1) | Primary CTA, highlights |
+| `--theme-glow` | `38 50% 60%` | `38 66% 70%` | Hover glow states (never as text or under white text in light) |
+| `--theme-shadow` | `0 11% 2%` | `35 40% 80%` | Deepest shadows |
+| `--theme-ember` | `20 100% 50%` (vivid orange) | `26 78% 36%` (= accent) | Halos of timeline dots, badges, skill bullets |
+
+The hero poster has its own `--poster-*` tokens, aligned with `motion/src/palettes.js`.
 
 ### 4.2 Typography
 
@@ -115,7 +119,7 @@ All Dune colors are declared as CSS custom properties in `src/index.css` and con
 
 - **Framer Motion** for entrance animations (`motion.h1`, `motion.div`, `motion.a`)
 - Common pattern: `initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}`
-- **Canvas effects** (`DesertParallax`, `SandstormEffect`) deferred via `showEffects` state in `Hero.tsx`
+- **Dune hero**: pre-rendered video (local `motion/` HyperFrames project, see `motion/CLAUDE.md`) + Framer Motion text synced by `hero/heroTimeline.ts`; Cyberpunk hero effects deferred 100 ms in `hero/HeroCyberpunk.tsx`
 
 ### 5.4 Component Conventions
 
@@ -147,6 +151,7 @@ npm run dev       # Vite dev server
 npm run build     # Production build
 npm run preview   # Preview prod build
 npm run lint      # ESLint
+npm run test      # Vitest (hero playback state machine, assets, title effect)
 ```
 
 - Path alias: `@` → `./src` (configured in `vite.config.ts` and `tsconfig.json`)
@@ -158,7 +163,7 @@ npm run lint      # ESLint
 
 1. **Never edit `src/components/ui/`** — these are shadcn/ui managed primitives.
 2. **All strings must use the `t` object** from `useLanguage()` — never hardcode user-facing text.
-3. **Respect the Dune color palette** — use `dune-*` Tailwind classes, not arbitrary colors.
+3. **Respect the Dune color palette** — use `theme-*` Tailwind classes or `hsl(var(--theme-*))`, not arbitrary colors.
 4. **Keep section IDs in French** — they are anchor targets used by nav and CTAs.
 5. **Lazy-load new heavy components** — follow the `React.lazy()` + `Suspense` pattern in `App.tsx`.
 6. **Animations use Framer Motion** — prefer `motion.*` components over raw CSS animations for entrance effects.

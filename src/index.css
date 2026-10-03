@@ -53,13 +53,21 @@
     --font-heading: 'Dune Rise', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    /* Semantic Theme (Default: Dune Light) */
-    --theme-base: 30 40% 82%;
-    --theme-surface: 20 20% 10%;
-    --theme-primary: 23 63% 52%;
-    --theme-accent: 37 70% 49%;
-    --theme-glow: 38 50% 60%;
-    --theme-shadow: 30 15% 85%;
+    /* Semantic Theme (Default: Dune Light) : palette A « parchemin », contrastes AA sur le fond */
+    --theme-base: 38 62% 89%;
+    --theme-surface: 18 55% 16%;
+    --theme-primary: 18 60% 36%;
+    --theme-accent: 26 78% 36%;
+    --theme-glow: 38 66% 70%;
+    --theme-shadow: 35 40% 80%;
+    /* Halo des pastilles et badges (orange vif en sombre, accent en clair) */
+    --theme-ember: 26 78% 36%;
+
+    /* Affiche animée du Hero (Dune clair) */
+    --poster-ink: 18 55% 16%;
+    --poster-ink-shadow: 23 63% 52%;
+    --poster-frame: 18 55% 16%;
+    --poster-paper: 38 64% 85%;
   }
 
   .dark {
@@ -88,13 +96,20 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    /* Semantic Theme (Dune Dark) */
-    --theme-base: 0 20% 5%;
+    /* Semantic Theme (Dune Dark) : fond = ciel de nuit de l'affiche du Hero (--poster-paper), sans cassure sous le Hero */
+    --theme-base: 15 44% 7%;
     --theme-surface: 30 30% 87%;
     --theme-primary: 23 63% 52%;
     --theme-accent: 37 70% 49%;
     --theme-glow: 38 50% 60%;
     --theme-shadow: 0 11% 2%;
+    --theme-ember: 20 100% 50%;
+
+    /* Affiche animée du Hero (Dune sombre) : relief du nom en cuivre, visible sur le ciel de nuit */
+    --poster-ink: 39 70% 69%;
+    --poster-ink-shadow: 23 63% 52%;
+    --poster-frame: 23 63% 52%;
+    --poster-paper: 15 44% 7%;
   }
 
   .universe-cyberpunk {
@@ -111,6 +126,7 @@
     --theme-accent: 45 93% 50%; /* Amber #F59E0B */
     --theme-glow: 54 99% 77%; /* Bright Pale Yellow */
     --theme-shadow: 0 0% 0%; /* Pitch black */
+    --theme-ember: 20 100% 50%;
   }
 
   .universe-cyberpunk.dark {
@@ -129,25 +145,14 @@
     @apply border-border;
   }
 
+  /* Même fond que la page : pas d'autre teinte avant le montage de React ni au rebond du défilement */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-theme-base text-foreground;
   }
 }
 
 @layer utilities {
   .font-dune {
     font-family: 'Dune Rise', sans-serif;
-  }
-
-  .bg-size-200 {
-    background-size: 200% 100%;
-  }
-
-  .bg-pos-0 {
-    background-position: 0% 0%;
-  }
-
-  .bg-pos-100 {
-    background-position: 100% 0%;
   }
 }

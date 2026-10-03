@@ -155,7 +155,7 @@ const Contact = () => {
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.15, rotate: 10 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-3 rounded-full bg-theme-primary/20 text-theme-primary hover:bg-theme-accent hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(210,144,38,0.5)]"
+                                        className="p-3 rounded-full bg-theme-primary/20 text-theme-primary hover:bg-theme-accent hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--theme-accent)/0.5)]"
                                         aria-label={label}
                                     >
                                         <Icon size={24} />
@@ -172,7 +172,7 @@ const Contact = () => {
                             transition={{ delay: 0.3 }}
                             className="bg-gradient-to-br from-theme-accent/10 to-transparent p-6 rounded-2xl border border-theme-accent/20 italic"
                         >
-                            <p className="text-theme-glow text-sm leading-relaxed">
+                            <p className="text-theme-primary dark:text-theme-glow text-sm leading-relaxed">
                                 "{t.contact.quote}"
                             </p>
                             <p className="text-theme-primary/60 text-xs mt-2 text-right">{t.contact.quoteAuthor}</p>
@@ -268,7 +268,8 @@ const Contact = () => {
                                             disabled={cooldown > 0}
                                             className={`w-full font-bold tracking-[0.3em] uppercase rounded-xl h-14 text-sm relative overflow-hidden group transition-all duration-500 shadow-lg ${cooldown > 0
                                                 ? 'bg-theme-primary/30 text-theme-surface/50 cursor-not-allowed'
-                                                : 'bg-gradient-to-r from-theme-primary via-theme-accent to-theme-primary bg-size-200 bg-pos-0 hover:bg-pos-100 text-white hover:shadow-[0_0_30px_rgba(210,144,38,0.6)]'
+                                                // Classes Tailwind natives : tailwind-merge (cn du Button) écrasait le dégradé avec les anciens utilitaires bg-size-200/bg-pos-*
+                                                : 'bg-gradient-to-r from-theme-primary via-theme-accent to-theme-primary bg-[length:200%_100%] bg-left hover:bg-right text-white hover:shadow-[0_0_30px_hsl(var(--theme-accent)/0.6)]'
                                                 }`}
                                         >
                                             {/* Animated background */}

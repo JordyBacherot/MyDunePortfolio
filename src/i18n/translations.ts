@@ -2,9 +2,14 @@ export interface ExperienceItem {
     title: string;
     organization: string;
     period: string;
-    description: string;
+    /** Phrase courte, ou liste de points (affichée en puces) */
+    description: string | string[];
     descriptionPlus?: string;
     type: string;
+    /** Colonne du parcours : expériences ou formations */
+    section: "work" | "education";
+    /** Carte mise en avant par un léger accent (teinte, bordure, pastille pleine) */
+    highlight?: boolean;
 }
 
 export interface SkillCategory {
@@ -19,6 +24,8 @@ export interface ProjectItem {
     tags: string[];
     link?: string;
     githubLink?: string;
+    /** Plusieurs sites dans la même carte : un bouton par site */
+    sites?: { name: string; url: string }[];
 }
 
 export interface TranslationStructure {
@@ -34,6 +41,8 @@ export interface TranslationStructure {
         description: string;
         viewProjects: string;
         contactMe: string;
+        pauseAnimation: string;
+        playAnimation: string;
     };
     experience: {
         title: string;
@@ -89,38 +98,73 @@ export const translations: Record<Language, TranslationStructure> = {
         // Hero Section
         hero: {
             name: "Jordy Bacherot",
-            description: "Etudiant en Master en Sciences Cognitives et Alternant Ingénieur en Intelligence Artificielle.",
+            description: "Ingénieur en Intelligence Artificielle et vacataire d'enseignement en IA à l'Université",
             viewProjects: "Voir mes projets",
             contactMe: "Me contacter",
+            pauseAnimation: "Mettre l'animation en pause",
+            playAnimation: "Relancer l'animation",
         },
         // Experience Section
         experience: {
-            title: "Parcours & Formations",
-            academic: "Formations Académiques",
-            professional: "Expériences Professionnelles",
+            title: "Parcours",
+            academic: "Formations",
+            professional: "Expériences",
             experiences: [
+                {
+                    title: "Ingénieur en Intelligence Artificielle",
+                    organization: "Direction du Numérique - Université de Lorraine",
+                    period: "2026 - Présent",
+                    description: [
+                        "Conception de solutions d'IA : modèles hébergés en interne, outils pour la pédagogie, la recherche et l'administration",
+                        "Formation des personnels à l'IA générative",
+                        "Pilotage de projets IA : faisabilité, cadrage, suivi",
+                    ],
+                    type: "Professionnel",
+                    section: "work"
+                },
+                {
+                    title: "Vacations d'enseignement",
+                    organization: "IDMC - Université de Lorraine",
+                    period: "2026 - Présent",
+                    description: [
+                        "Écosystème technique et conceptuel autour des LLM",
+                        "Cours « Développer avec l'IA »",
+                        "Appeler un LLM, créer un chatbot, automatiser des processus",
+                        "Dimensionner des modèles pour les entreprises",
+                    ],
+                    type: "Enseignement",
+                    section: "work",
+                    highlight: true
+                },
+                {
+                    title: "Alternance - Ingénieur IA Générative - Projet PLEIADES",
+                    organization: "Direction du Numérique - Université de Lorraine",
+                    period: "2024 - 2026",
+                    description: [
+                        "Applications d'IA pour la pédagogie, la recherche et l'administration (programme Services & Simplification)",
+                        "Test et intégration d'outils open source d'IA générative",
+                        "Ateliers et sensibilisations à l'usage de l'IA",
+                    ],
+                    type: "Professionnel",
+                    section: "work"
+                },
                 {
                     title: "Master Sciences Cognitives",
                     organization: "IDMC",
-                    period: "2024 - Présent",
+                    period: "2024 - 2026",
                     description: "Parcours IACH : Intelligence Artificielle Centrée Humain.",
-                    descriptionPlus: "Major de M1",
-                    type: "Académique"
-                },
-                {
-                    title: "Alternance Ingénieur IA",
-                    organization: "Direction du Numérique - Université de Lorraine",
-                    period: "2024 - Présent",
-                    description: "Intégration de solutions d'IA générative (LLM/RAG).",
-                    type: "Professionnel"
+                    descriptionPlus: "Major de promotion · M1 & M2",
+                    type: "Académique",
+                    section: "education"
                 },
                 {
                     title: "Licence MIASHS",
                     organization: "Université de Lorraine",
                     period: "2021 - 2024",
-                    description: "Mathématiques et Informatique Appliquées aux Sciences Humaines et Sociales. Parcours Sciences Cognitives",
-                    descriptionPlus: "Major de Promotion - Parcours Sciences Cognitives",
-                    type: "Académique"
+                    description: "Mathématiques et Informatique Appliquées aux Sciences Humaines et Sociales, parcours Sciences Cognitives.",
+                    descriptionPlus: "Major de promotion",
+                    type: "Académique",
+                    section: "education"
                 }
             ],
         },
@@ -154,7 +198,7 @@ export const translations: Record<Language, TranslationStructure> = {
             items: [
                 {
                     title: "Création de chatbots RAG",
-                    theme: "Intégration IA - Alternance",
+                    theme: "Intégration IA - Professionnel",
                     description: "Application permettant l'intégration de chatbots RAG dans des applications tierces via API, pour l'assistance aux premières questions utilisateurs sur des logiciels spécifiques.",
                     tags: ["Projet Professionnel", "LLM", "RAG", "LangChain", "LangGraph", "LangFuse", "VLLM"]
                 },
@@ -187,11 +231,14 @@ export const translations: Record<Language, TranslationStructure> = {
                     link: "https://github.com/JordyBacherot/FineTunning_LLM_StoryTelling"
                 },
                 {
-                    title: "Maison Bacherot — Site Vitrine",
+                    title: "Maison\u00a0Bacherot & Burger\u00a0Buxy\u00a0— Sites vitrines",
                     theme: "Développement Web - Familial",
-                    description: "Site vitrine pour la boucherie artisanale Maison Bacherot (Bourgogne).",
+                    description: "Sites vitrines de deux commerces familiaux en Bourgogne : la boucherie artisanale Maison Bacherot et Burger Buxy, restaurant de burgers maison à Buxy.",
                     tags: ["Projet Personnel", "React", "Vite", "Tailwind CSS v4", "Framer Motion", "GSAP"],
-                    link: "https://www.boucherie-mercurey.fr/"
+                    sites: [
+                        { name: "Maison Bacherot", url: "https://www.boucherie-mercurey.fr/" },
+                        { name: "Burger Buxy", url: "https://www.burger-buxy.fr/" },
+                    ]
                 },
 
             ],
@@ -235,38 +282,73 @@ export const translations: Record<Language, TranslationStructure> = {
         // Hero Section
         hero: {
             name: "Jordy Bacherot",
-            description: "Student in Cognitive Sciences and Artificial Intelligence and Apprenticeship in Artificial Intelligence Engineering.",
+            description: "Artificial Intelligence Engineer and AI lecturer at the University of Lorraine.",
             viewProjects: "View my projects",
             contactMe: "Contact me",
+            pauseAnimation: "Pause animation",
+            playAnimation: "Play animation",
         },
         // Experience Section
         experience: {
             title: "Journey",
-            academic: "Academic",
-            professional: "Professional",
+            academic: "Education",
+            professional: "Experience",
             experiences: [
+                {
+                    title: "Artificial Intelligence Engineer",
+                    organization: "Digital Directorate - University of Lorraine",
+                    period: "2026 - Present",
+                    description: [
+                        "AI solution design: in-house hosted models, tools for teaching, research and administration",
+                        "Generative AI training for staff",
+                        "AI project management: feasibility, scoping, follow-up",
+                    ],
+                    type: "Professional",
+                    section: "work"
+                },
+                {
+                    title: "Part-time university teaching",
+                    organization: "IDMC - University of Lorraine",
+                    period: "2026 - Present",
+                    description: [
+                        "Technical and conceptual ecosystem around LLMs",
+                        "“Developing with AI” course",
+                        "Calling an LLM, building a chatbot, automating processes",
+                        "Sizing models for businesses",
+                    ],
+                    type: "Teaching",
+                    section: "work",
+                    highlight: true
+                },
+                {
+                    title: "Apprenticeship - Generative AI Engineer - PLEIADES Project",
+                    organization: "Digital Directorate - University of Lorraine",
+                    period: "2024 - 2026",
+                    description: [
+                        "AI applications for teaching, research and administration (Services & Simplification programme)",
+                        "Testing and integration of open-source generative AI tools",
+                        "AI workshops and awareness sessions",
+                    ],
+                    type: "Professional",
+                    section: "work"
+                },
                 {
                     title: "Master in Cognitive Sciences",
                     organization: "IDMC",
-                    period: "2024 - Present",
+                    period: "2024 - 2026",
                     description: "IACH Track: Human-Centered Artificial Intelligence.",
-                    descriptionPlus: "M1 Valedictorian",
-                    type: "Academic"
-                },
-                {
-                    title: "AI Engineer Apprenticeship",
-                    organization: "Digital Directorate - University of Lorraine",
-                    period: "2024 - Present",
-                    description: "Integration of generative AI solutions (LLM/RAG).",
-                    type: "Professional"
+                    descriptionPlus: "Valedictorian · M1 & M2",
+                    type: "Academic",
+                    section: "education"
                 },
                 {
                     title: "Bachelor's in MIASHS",
                     organization: "University of Lorraine",
                     period: "2021 - 2024",
-                    description: "Mathematics and Computer Science Applied to Human and Social Sciences.",
+                    description: "Mathematics and Computer Science Applied to Human and Social Sciences, Cognitive Sciences track.",
                     descriptionPlus: "Valedictorian",
-                    type: "Academic"
+                    type: "Academic",
+                    section: "education"
                 }
             ],
         },
@@ -300,7 +382,7 @@ export const translations: Record<Language, TranslationStructure> = {
             items: [
                 {
                     title: "RAG Chatbot Development",
-                    theme: "AI Integration - Apprenticeship",
+                    theme: "AI Integration - Professional",
                     description: "Application enabling RAG chatbot integration into third-party apps via API, handling initial user queries on specific software.",
                     tags: ["Professional Project", "LLM", "RAG", "LangChain", "LangGraph", "LangFuse", "VLLM"]
                 },
@@ -333,11 +415,14 @@ export const translations: Record<Language, TranslationStructure> = {
                     link: "https://github.com/JordyBacherot/FineTunning_LLM_StoryTelling"
                 },
                 {
-                    title: "Maison Bacherot — Showcase Website",
+                    title: "Maison\u00a0Bacherot & Burger\u00a0Buxy\u00a0— Showcase Websites",
                     theme: "Web Development - Family",
-                    description: "Showcase website for artisanal butcher Maison Bacherot (Burgundy).",
+                    description: "Showcase websites for two family businesses in Burgundy: artisanal butcher Maison Bacherot and Burger Buxy, a homemade burger restaurant in Buxy.",
                     tags: ["Personal Project", "React", "Vite", "Tailwind CSS v4", "Framer Motion", "GSAP"],
-                    link: "https://www.boucherie-mercurey.fr/"
+                    sites: [
+                        { name: "Maison Bacherot", url: "https://www.boucherie-mercurey.fr/" },
+                        { name: "Burger Buxy", url: "https://www.burger-buxy.fr/" },
+                    ]
                 },
             ],
         },
