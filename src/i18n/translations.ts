@@ -98,7 +98,7 @@ export const translations: Record<Language, TranslationStructure> = {
         // Hero Section
         hero: {
             name: "Jordy Bacherot",
-            description: "Ingénieur en Intelligence Artificielle et vacataire d'enseignement en IA à l'Université",
+            description: "Ingénieur en Intelligence Artificielle et enseignant vacataire en IA à l'Université",
             viewProjects: "Voir mes projets",
             contactMe: "Me contacter",
             pauseAnimation: "Mettre l'animation en pause",
